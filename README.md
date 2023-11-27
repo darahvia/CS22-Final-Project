@@ -50,5 +50,6 @@ user may add rest time after every task
 
 
 ## User's end
-![timetable](images/sample_timetable.png)
 ![userinterface](images/user_interface.jpg)
+![timetable](images/sample_timetable.png)
+
