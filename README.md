@@ -37,5 +37,13 @@ Deadline: December 5, 2023
 3. Timetable Schedule
    Organize the calendar timetable in the order:
    1. Scheduled tasks
-   2. Highest Priority
-   3. Lowest Priority
+   2. Highest Priority (depends on input sequence)
+   3. Lowest Priority  (depends on input sequence)
+
+
+notes:
+user may add rest time after every task
+Priority	Note
+1	start of assignment to deadline
+2	(deadline - start) /  2 to deadline
+3	day of deadline
