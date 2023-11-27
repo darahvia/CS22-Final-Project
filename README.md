@@ -43,12 +43,12 @@ Deadline: December 5, 2023
 
 notes:
 user may add rest time after every task
-### Priority Note
+##### Priority Note
 1.	start of assignment to deadline
 2.	(deadline - start) /  2 to deadline
 3.	day of deadline
 
 
 ## User's end
-![Alt text](C:\CS22-Final-Project\images\sample_timetable.png)
-![Alt text](![image_url](images/user_interface.jpg))
+![timetable](C:\CS22-Final-Project\images\sample_timetable.png)
+![userinterface](![image_url](images/user_interface.jpg))
