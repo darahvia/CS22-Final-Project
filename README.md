@@ -50,5 +50,5 @@ user may add rest time after every task
 
 
 ## User's end
-![timetable](C:\CS22-Final-Project\images\sample_timetable.png)
-![userinterface](![image_url](images/user_interface.jpg))
+![timetable](images/sample_timetable.png)
+![userinterface](images/user_interface.jpg)
