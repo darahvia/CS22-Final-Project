@@ -3,11 +3,11 @@
 BS in Computer Science 
 CMSC 22 Final Project
 
-To be submitted on November 27, 2023
+To be submitted on December 10, 2023
 
 ## Installation
-
-1. Clone the repository to your local machine:
+1. Navigate to the directory where you want to save the repository. 
+2. Clone the repository to your local machine:
 
    ```bash
    git clone https://github.com/darahvia/CS22-Final-Project.git
