@@ -25,18 +25,15 @@ Deadline: December 5, 2023
    1. Determine the number of days before the deadline.
       ```bash
       8 days
-
-   2. Divide Units / (Units/Day) from user input/
+   2. Divide Units / (Units/Day) from user input
       ```
       Units: 5
       Units/Day: 2
-
    3. Distribute to days before deadline to the timetable's free slots.
       ```
       November 28, 2023: 10:00 - 12:00 
       November 30, 2023: 1:00 - 3:00
       December 3, 2023: 2:00 - 3:00
-
 3. Timetable Schedule
    Organize the calendar timetable in the order:
    1. Scheduled tasks
