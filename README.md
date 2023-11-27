@@ -1,6 +1,9 @@
 # CS22-Final-Project
 
-A brief description of your project goes here.
+BS in Computer Science 
+CMSC 22 Final Project
+
+To be submitted on November 27, 2023
 
 ## Installation
 
