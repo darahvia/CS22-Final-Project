@@ -1,18 +1,19 @@
 
 class UnscheduledEntry implements Entry, Comparable<UnscheduledEntry> {
     protected String name;
-    protected String dueDate;
+    protected String dueTime;
     protected int units;
-    protected int unitsPerDay;
+    protected int unitsPerTimeslot;
     protected int priority;
     protected int timeslot;
 
-    public UnscheduledEntry(String name, String dueDate, int units, int unitsPerDay, int priority) {
+    public UnscheduledEntry(String name, String dueTime, int units, int unitsPerTimeslot, int priority, int timeslot) {
         this.name = name;
-        this.dueDate = dueDate;
+        this.dueTime = dueTime;
         this.units = units;
-        this.unitsPerDay = unitsPerDay;
+        this.unitsPerTimeslot = unitsPerTimeslot;
         this.priority = priority;
+        this.timeslot = timeslot;
     }
 
     @Override
@@ -28,30 +29,32 @@ class UnscheduledEntry implements Entry, Comparable<UnscheduledEntry> {
     public String toString() {
         return "UnscheduledEntry{" +
                 "name='" + name + '\'' +
-                ", dueDate='" + dueDate + '\'' +
+                ", dueTime ='" + dueTime + '\'' +
                 ", units=" + units +
-                ", unitsPerDay=" + unitsPerDay +
                 ", priority=" + priority +
+                ", timeslot =" + timeslot +
                 '}';
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public String getDueTime() {
+        return dueTime;
     }
 
     public int getUnits() {
         return units;
     }
 
-    public int getUnitsPerDay() {
-        return unitsPerDay;
+    public int priority() {
+        return priority;
+    }
+
+    public int getTimeslot(){
+        return timeslot;
     }
 
     public int compareTo(UnscheduledEntry otherEntry){
         return Integer.compare(otherEntry.getPriority(), this.getPriority());
     }
 
-    public int getTimeslot(){
-        return timeslot;
-    }
+
 }

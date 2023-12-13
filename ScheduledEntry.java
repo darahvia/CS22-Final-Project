@@ -1,12 +1,12 @@
 class ScheduledEntry implements Entry {
     protected String name;
-    protected String day;
-    protected String time;
+    protected String startTime;
+    protected String endTime;
 
-    public ScheduledEntry(String name, String day, String time) {
+    public ScheduledEntry(String name, String startTime, String endTime) {
         this.name = name;
-        this.day = day;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @Override
@@ -18,16 +18,16 @@ class ScheduledEntry implements Entry {
     public String toString() {
         return "ScheduledEntry{" +
                 "name='" + name + '\'' +
-                ", day='" + day + '\'' +
-                ", time='" + time + '\'' +
+                ", day='" + startTime + '\'' +
+                ", time='" + endTime + '\'' +
                 '}';
     }
 
-    public String getDay() {
-        return day;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public String getTime() {
-        return time;
+    public String getEndTime() {
+        return endTime;
     }
 }
