@@ -1,19 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
 
-class UnscheduledEntry implements Entry, Comparable<UnscheduledEntry> {
+class UnscheduledEntry implements Entry {
     protected String name;
     protected String dueTime;
     protected int units;
     protected int unitsPerTimeslot;
-    protected int priority;
-    protected int timeslot;
+    protected int unitsRemaining;
 
-    public UnscheduledEntry(String name, String dueTime, int units, int unitsPerTimeslot, int priority, int timeslot) {
+    public UnscheduledEntry(String name, String dueTime, int units, int unitsPerTimeslot) {
         this.name = name;
         this.dueTime = dueTime;
         this.units = units;
         this.unitsPerTimeslot = unitsPerTimeslot;
-        this.priority = priority;
-        this.timeslot = timeslot;
+        this.unitsRemaining = units;
     }
 
     @Override
@@ -21,9 +21,6 @@ class UnscheduledEntry implements Entry, Comparable<UnscheduledEntry> {
         return name;
     }
 
-    public int getPriority() {
-        return priority;
-    }
 
     @Override
     public String toString() {
@@ -31,8 +28,6 @@ class UnscheduledEntry implements Entry, Comparable<UnscheduledEntry> {
                 "name='" + name + '\'' +
                 ", dueTime ='" + dueTime + '\'' +
                 ", units=" + units +
-                ", priority=" + priority +
-                ", timeslot =" + timeslot +
                 '}';
     }
 
@@ -48,17 +43,22 @@ class UnscheduledEntry implements Entry, Comparable<UnscheduledEntry> {
         return unitsPerTimeslot;
     }
 
-    public int priority() {
-        return priority;
-    }
+    public List<Integer> distributeUnits() {
+            List<Integer> distribution = new ArrayList<>();
+            int remainingUnits = units;
 
-    public int getTimeslot(){
-        return timeslot;
-    }
+            while (remainingUnits > 0) {
+                if (remainingUnits >= unitsPerTimeslot) {
+                    distribution.add(unitsPerTimeslot);
+                    remainingUnits -= unitsPerTimeslot;
+                } else {
+                    distribution.add(remainingUnits);
+                    remainingUnits = 0;
+                }
+            }
 
-    public int compareTo(UnscheduledEntry otherEntry){
-        return Integer.compare(otherEntry.getPriority(), this.getPriority());
-    }
+            return distribution;
+        }
 
 
 }
