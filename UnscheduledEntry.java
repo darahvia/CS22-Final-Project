@@ -44,6 +44,10 @@ class UnscheduledEntry implements Entry, Comparable<UnscheduledEntry> {
         return units;
     }
 
+    public int getUnitsPerTimeslot(){
+        return unitsPerTimeslot;
+    }
+
     public int priority() {
         return priority;
     }

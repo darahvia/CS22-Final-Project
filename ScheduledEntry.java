@@ -1,9 +1,11 @@
-class ScheduledEntry implements Entry {
-    protected String name;
-    protected String startTime;
-    protected String endTime;
+import java.time.LocalTime;
 
-    public ScheduledEntry(String name, String startTime, String endTime) {
+public class ScheduledEntry implements Entry {
+    protected String name;
+    protected LocalTime startTime;
+    protected LocalTime endTime;
+
+    public ScheduledEntry(String name, LocalTime startTime, LocalTime endTime) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -23,11 +25,11 @@ class ScheduledEntry implements Entry {
                 '}';
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 }
