@@ -45,15 +45,15 @@ class UnscheduledEntry implements Entry {
 
     public List<Integer> distributeUnits() {
             List<Integer> distribution = new ArrayList<>();
-            int remainingUnits = units;
+            unitsRemaining = units;
 
-            while (remainingUnits > 0) {
-                if (remainingUnits >= unitsPerTimeslot) {
+            while (unitsRemaining > 0) {
+                if (unitsRemaining >= unitsPerTimeslot) {
                     distribution.add(unitsPerTimeslot);
-                    remainingUnits -= unitsPerTimeslot;
+                    unitsRemaining -= unitsPerTimeslot;
                 } else {
-                    distribution.add(remainingUnits);
-                    remainingUnits = 0;
+                    distribution.add(unitsRemaining);
+                    unitsRemaining = 0;
                 }
             }
 

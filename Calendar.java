@@ -33,10 +33,16 @@ public class Calendar {
                 LocalTime endTime = LocalTime.parse(endTimeStr);
 
                 timeblockManager.addTimeBlock(startTime, endTime, taskName);
-                timeblockManager.updateTimeslots();
-
+                TreeMap<Integer, String> timeslotsToUpdate = new TreeMap<>();
                 int startMinutes = startTime.getHour() * 4 + startTime.getMinute();
                 int endMinutes = endTime.getHour() * 4 + endTime.getMinute();
+
+                for (int i = startMinutes; i <= endMinutes; i++) {
+                    timeslotsToUpdate.put(i, taskName);
+                }
+
+                timeblockManager.updateTimeslots(timeslotsToUpdate);
+
 
                 allEntries.put(startMinutes, new ScheduledEntry(taskName, startTime, endTime));
                 allEntries.put(endMinutes, null);
@@ -75,7 +81,9 @@ public class Calendar {
         UnscheduledEntryStrategy unscheduledEntryStrategy = new UnscheduledEntryStrategy();
         unscheduledEntryStrategy.scheduleUnscheduledEntries(unscheduledEntriesQueue, timeblockManager, allEntries);
 
+
         displayAllEntries(allEntries);
+
         // timeblockManager.displayOccupiedTimeslots();
     }
 

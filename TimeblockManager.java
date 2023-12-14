@@ -9,7 +9,8 @@ import java.util.*;
     }
 
     final static int MAX_TIME_SLOTS = 24 * 4; 
-    boolean[] occupiedTimeslots = new boolean[MAX_TIME_SLOTS];
+    boolean[] occupiedTimeslots = new boolean[MAX_TIME_SLOTS];;
+
 
     public void addTimeBlock(LocalTime startTime, LocalTime endTime, String entryName) {
         int startMinutes = startTime.getHour() * 4 + startTime.getMinute();
@@ -22,12 +23,18 @@ import java.util.*;
         allEntries.put(endMinutes, null);
     }
 
-    public void updateTimeslots() {
-        //update the occupedtimeslots array if a slot is added
-        Arrays.fill(occupiedTimeslots, false);
-        for (int timeSlot : allEntries.keySet()) {
-            if (allEntries.get(timeSlot) != null) {
-                occupiedTimeslots[timeSlot] = true;
+    public void updateTimeslots(Map<Integer, String> timeslotsToUpdate) {
+        for (Map.Entry<Integer, String> entry : timeslotsToUpdate.entrySet()) {
+            int timeslot = entry.getKey();
+            System.out.println("timeslot" + timeslot);
+            String entryName = entry.getValue();
+            
+            if (entryName != null) {
+                // Mark the timeslot as occupied
+                occupiedTimeslots[timeslot] = true;
+            } else {
+                // Mark the timeslot as unoccupied
+                occupiedTimeslots[timeslot] = false;
             }
         }
     }

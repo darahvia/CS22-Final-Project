@@ -6,77 +6,105 @@ public class UnscheduledEntryStrategy {
     public static void scheduleUnscheduledEntries(Queue<UnscheduledEntry> unscheduledEntriesQueue,
                                                   TimeblockManager timeblockManager,
                                                   TreeMap<Integer, Entry> allEntries) {
-        List<Integer> availableSlots = timeblockManager.getAvailableSlots();
+
+
+        int currentEntryIndex = 0; // Keep track of the index of the entry to be scheduled next
+
+        // while (!unscheduledEntriesQueue.isEmpty()) {
+        //     UnscheduledEntry unscheduledEntry = unscheduledEntriesQueue.poll();
+        //     List<Integer> distribution = unscheduledEntry.distributeUnits();
+        //     // System.out.println("(2, 2, 1)): " + distribution);
+
+        //     for (int units : distribution) {
+        //         List<Integer> availableSlots = timeblockManager.getAvailableSlots();
+        //         if (availableSlots.isEmpty()) {
+        //             // System.out.println("Not enough available slots for scheduling remaining units.");
+        //             break;
+        //         }
+
+        //         int timeslot = availableSlots.get(0);
+        //         // System.out.println("before" + timeslot);
+        //         LocalTime startTime = calculateTime(timeslot);
+        //         LocalTime endTime = calculateTime(timeslot + units * 4);
+        //         // System.out.println(startTime);
+        //         // System.out.println(endTime);
+
+        //         TreeMap<Integer, String> timeslotsToUpdate = new TreeMap<>();
+        //         for (int i = timeslot; i < timeslot + units * 4; i++) {
+        //             timeslotsToUpdate.put(i, unscheduledEntry.getName());
+        //         }
+        //         timeblockManager.addTimeBlock(startTime, endTime, unscheduledEntry.getName());
+        //         timeblockManager.updateTimeslots(timeslotsToUpdate);
+        //         // System.out.println("available slots" + availableSlots);
+
+        //         // System.out.println("after" + timeslot);
+
+        //         int startMinutes = startTime.getHour() * 4 + startTime.getMinute();
+        //         int endMinutes = endTime.getHour() * 4 + endTime.getMinute();
+
+        //         allEntries.put(startMinutes, new ScheduledEntry(unscheduledEntry.getName(), startTime, endTime));
+        //         allEntries.put(endMinutes, null);
+        //     }
+
+        //     // Alternate the index for the next entry
+
+        // if (!unscheduledEntriesQueue.isEmpty()) {
+        //     currentEntryIndex = (currentEntryIndex + 1) % unscheduledEntriesQueue.size();
+        //     break;
+        // }
+
+        // }
+
         while (!unscheduledEntriesQueue.isEmpty()) {
-        
-            scheduleEntry(unscheduledEntriesQueue, availableSlots, timeblockManager, allEntries);
-        }
-    }
-
-
-
-    private static void scheduleEntry(Queue<UnscheduledEntry> unscheduledEntriesQueue,
-                                    List<Integer> availableSlots,
-                                    TimeblockManager timeblockManager,
-                                    TreeMap<Integer, Entry> allEntries) {
-        while (!unscheduledEntriesQueue.isEmpty() && !availableSlots.isEmpty()) {
             UnscheduledEntry unscheduledEntry = unscheduledEntriesQueue.poll();
             List<Integer> distribution = unscheduledEntry.distributeUnits();
-
-            for (int units : distribution) {
-                if (availableSlots.isEmpty()) {
-                    System.out.println("Not enough available slots for scheduling remaining units.");
-                    break;
+        
+            int maxUnits = distribution.stream().mapToInt(Integer::intValue).max().orElse(0);
+        
+            // Loop through each unit
+            for (int unitIndex = 0; unitIndex < maxUnits; unitIndex++) {
+                // Loop through each task
+                for (int taskIndex = 0; taskIndex < distribution.size(); taskIndex++) {
+                    int units = distribution.get(taskIndex);
+        
+                    List<Integer> availableSlots = timeblockManager.getAvailableSlots();
+                    if (availableSlots.isEmpty()) {
+                        // System.out.println("Not enough available slots for scheduling remaining units.");
+                        break;
+                    }
+        
+                    int timeslot = availableSlots.get(0);
+                    LocalTime startTime = calculateTime(timeslot);
+                    LocalTime endTime = calculateTime(timeslot + units * 4);
+        
+                    TreeMap<Integer, String> timeslotsToUpdate = new TreeMap<>();
+                    for (int i = timeslot; i < timeslot + units * 4; i++) {
+                        timeslotsToUpdate.put(i, unscheduledEntry.getName());
+                    }
+                    timeblockManager.addTimeBlock(startTime, endTime, unscheduledEntry.getName());
+                    timeblockManager.updateTimeslots(timeslotsToUpdate);
+        
+                    int startMinutes = startTime.getHour() * 4 + startTime.getMinute();
+                    int endMinutes = endTime.getHour() * 4 + endTime.getMinute();
+        
+                    allEntries.put(startMinutes, new ScheduledEntry(unscheduledEntry.getName(), startTime, endTime));
+                    allEntries.put(endMinutes, null);
                 }
-
-                int timeslot = availableSlots.remove(0);
-                LocalTime startTime = calculateStartTime(timeslot);
-                LocalTime endTime = calculateEndTime(timeslot + units);
-
-                timeblockManager.addTimeBlock(startTime, endTime, unscheduledEntry.getName());
-                timeblockManager.updateTimeslots();
-
-                int startMinutes = startTime.getHour() * 4 + startTime.getMinute();
-                int endMinutes = endTime.getHour() * 4 + endTime.getMinute();
-
-                allEntries.put(startMinutes, new ScheduledEntry(unscheduledEntry.getName(), startTime, endTime));
-                allEntries.put(endMinutes, null);
             }
         }
-    }
-
-    private static LocalTime calculateStartTime(int timeslot) {
-        int hour = timeslot / 4;
-        int minute = (timeslot % 4) * 15;
-        return LocalTime.of(hour, minute);
-    }
-
-    private static LocalTime calculateEndTime(int timeslot) {
-        int hour = timeslot / 4;
-        int minute = (timeslot % 4) * 15;
-        return LocalTime.of(hour, minute);
-    }
-
-
-        /*
-        example:
-
-        laundry:
-        dueTime: 19:00
-        units: 3
-        unitsPerTimeSlot: 1
-
-        final project:
-        dueTime: 21:00
-        units: 6
-        unitsPerTimeSlot: 2
-
-        what happens next is:
-        find available timeslot and fill with alternating unitspertimeslot laundry and final project
         
-        01:00 - 02:00 laundry
-        02:00 - 04:00 final project
-        04:00 - 04:15 occupied
-        04:15 - 05:15 laundry
-         */
+        // Alternate the index for the next entry
+        if (!unscheduledEntriesQueue.isEmpty()) {
+            currentEntryIndex = (currentEntryIndex + 1) % unscheduledEntriesQueue.size();
+        }
+        
+        
+        
+    }
+
+    private static LocalTime calculateTime(int timeslot) {
+        int hour = timeslot / 4;
+        int minute = (timeslot % 4) * 15;
+        return LocalTime.of(hour, minute);
+    }
 }
