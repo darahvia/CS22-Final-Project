@@ -3,7 +3,7 @@
 BS in Computer Science 
 CMSC 22 Final Project
 
-To be submitted on December 10, 2023
+To be submitted on December 15, 2023
 
 ## Installation
 1. Navigate to the directory where you want to save the repository. 
